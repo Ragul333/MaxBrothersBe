@@ -17,14 +17,6 @@ app.get("/", (req, res) => {
   res.send("Welcome");
 });
 
-const __dirname = path.resolve();
-app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
-app.use("*", (req, res) =>
-  res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
-);
-
-app.use(express.static(path.join(__dirname, "/frontend/build")));
-
 const PORT = process.env.PORT || 5000;
 
 mongoose
