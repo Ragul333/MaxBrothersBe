@@ -9,3 +9,9 @@ export const createProjects = async (req, res) => {
   const created = await projects.save();
   res.status(201).json(projects);
 };
+
+export const getProjects = async (req, res) => {
+  const projects = ProjectModel.find({});
+
+  res.status(201).json(projects);
+};
