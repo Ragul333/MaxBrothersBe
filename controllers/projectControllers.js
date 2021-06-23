@@ -11,7 +11,11 @@ export const createProjects = async (req, res) => {
 };
 
 export const getProjects = async (req, res) => {
-  const projects = ProjectModel.find({});
+  try {
+    const projects = await ProjectModel.find({});
 
-  res.status(201).json(projects);
+    res.json(projects);
+  } catch (error) {
+    res.status(404).json({ message: "Project not Found" });
+  }
 };
