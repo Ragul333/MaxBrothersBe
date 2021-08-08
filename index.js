@@ -2,9 +2,9 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
-import fileUpload from "express-fileupload";
 import movieRoutes from "./routes/posts.js";
 import userRoutes from "./routes/userRoute.js";
+import fileUpload from "express-fileupload";
 import uploadRoutes from "./routes/upload.js";
 import cookieParser from "cookie-parser";
 

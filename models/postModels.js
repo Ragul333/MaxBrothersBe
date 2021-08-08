@@ -6,6 +6,7 @@ const PostSchema = mongoose.Schema({
     required: true,
   },
   image: { type: String, required: true },
+  date: {type: String}
 });
 
 const PostModel = mongoose.model("movies", PostSchema);

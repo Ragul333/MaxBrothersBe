@@ -5,6 +5,7 @@ export const createMovies = async (req, res) => {
   const movies = new PostModel({
     movies: req.body.movies,
     image: req.body.image,
+    date:req.body.date
   });
 
   const created = await movies.save();

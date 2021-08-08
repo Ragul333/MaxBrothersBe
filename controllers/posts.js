@@ -5,7 +5,11 @@ import PostModel from "../models/postModels.js";
 // access by everyone
 export const getMovies = async (req, res) => {
   try {
-    const movies = await PostModel.find({});
+    const movies = (await PostModel.find({}, null, {sort: {'_id':-1}, function (err,movies){
+      if(err)
+      res.send(err);
+  res.json(movies);
+    }}));
     res.json(movies);
   } catch (error) {
     res.status(404).json({ message: "Movies not Found" });
