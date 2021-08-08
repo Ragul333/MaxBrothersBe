@@ -5,8 +5,8 @@ const PostSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  image: { type: String, required: true },
-  date: {type: String}
+  image: { type: Array, required: true },
+  date: {type: String,default: 'UPCOMING'}
 });
 
 const PostModel = mongoose.model("movies", PostSchema);
