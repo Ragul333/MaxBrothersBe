@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoute.js";
 import fileUpload from "express-fileupload";
 import uploadRoutes from "./routes/upload.js";
 import cookieParser from "cookie-parser";
+import path from 'path';
 
 const app = express();
 app.use(express.json())
@@ -15,6 +16,9 @@ dotenv.config();
 app.use(cors());
 
 app.use(express.json({ limit: "50mb", extended: true }));
+
+// uploads
+/* app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); */
 
 app.use(fileUpload({
   useTempFiles:true
