@@ -17,8 +17,11 @@ router.post("/image", (req, res) => {
       return res.status(400).json({message:'No files'})
     }
     
-    const file = req.files.file;
-    
+    const files = req.files.file;
+
+   // console.log(files)
+
+/*     
     if(file.size>1024*1024){
       removeTmp(file.tempFilePath)
       return res.status(400).json({message:'Large file'})
@@ -27,13 +30,27 @@ router.post("/image", (req, res) => {
     if(file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png'){
       removeTmp(file.tempFilePath)
        return res.status(400).json({message:'Informat file'}) 
-    }
-  
-    
-    cloudinary.v2.uploader.upload(file.tempFilePath, {folder:"test"}, async(err,result)=>{
-      if(err) throw err;
-      res.status(200).json({public_id: result.public_id, url: result.secure_url})
+    } */
+    var cloudinaryfiles = [];
+    files.map((file,index)=>{
+
+      cloudinary.v2.uploader.upload(file.tempFilePath, {folder:"test"}, async(err,result)=>{
+        if(err) throw err;
+        cloudinaryfiles.push({public_id: result.public_id, url: result.secure_url})
+        console.log(cloudinaryfiles)
+        //res.status(200).json({public_id: result.public_id, url: result.secure_url})
+        if((files.length - 1) == index){
+          res.status(200).json(cloudinaryfiles)
+          console.log(cloudinaryfiles)
+        } 
+      })
+
+/*       console.log(files.length,'Files.length')
+      console.log(index,'index') */
     })
+    //res.status(200).json(cloudinaryfiles)
+
+
 
     
   } catch (error) {
