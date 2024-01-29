@@ -7,7 +7,11 @@ import userRoutes from "./routes/userRoute.js";
 import fileUpload from "express-fileupload";
 import uploadRoutes from "./routes/upload.js";
 import cookieParser from "cookie-parser";
-import path from 'path';
+import fs from 'fs'
+import { upload } from "./multer.js";
+import cloudinary from "cloudinary";
+
+
 
 const app = express();
 app.use(express.json())
@@ -18,6 +22,52 @@ app.use(cors());
 app.use(express.json({ limit: "50mb", extended: true }));
 
 // uploads
+
+cloudinary.config({
+  cloud_name: 'drpwuzvax',
+  api_key: '639564898932956',
+  api_secret: 'ErJ8fJbn3WY2nanTo8nrLFJoFes',
+});
+
+
+// uploads
+
+app.use('/uploadimages',upload.array('image'),async(req,res)=>{
+  // const uploader = async (path) => await uploads.uploads(path,'Images')
+  try {
+    if(req.method === 'POST'){
+      const urls = [];
+      
+      const files = req.files;
+      
+      for(let i=0; i<files.length; i++){
+        
+        cloudinary.v2.uploader.upload(files[i].path,{folder:"test"}, async(err,result)=>{
+          /* urls.push(result.url)
+          fs.unlinkSync(path) */
+          let newArray = (result) => {
+            urls.push(result.url)
+          }
+          newArray(result);          
+
+        })
+        // const newPath = await uploader(path)
+      }
+      res.status(200).json({
+        msg:'images uploaded',
+        data: urls
+      })
+    }
+  } catch (error){
+    res.status(405).json({
+      err:'Not uploaded',
+      error:error.message
+    })
+  }
+
+})
+
+
 /* app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); */
 
 app.use(fileUpload({
